@@ -11,7 +11,7 @@ import resolveConfig from "tailwindcss/resolveConfig"
 /** @type {import('tailwindcss').Config} */
 export default resolveConfig({
   darkMode: ["class", '[data-theme="dark"]'],
-  content: ["./src/**/*.{ts,tsx}"],
+  content: ["./apps/renderer/**/*.{ts,tsx}", "./apps/web/**/*.{ts,tsx}"],
   prefix: "",
   theme: {
     container: {
@@ -40,10 +40,7 @@ export default resolveConfig({
           DEFAULT: "hsl(var(--muted) / <alpha-value>)",
           foreground: "hsl(var(--muted-foreground) / <alpha-value>)",
         },
-        accent: {
-          DEFAULT: "#ff5c00",
-          foreground: "hsl(var(--fo-text-primary), <alpha-value>)",
-        },
+        accent: "hsl(var(--fo-a) / <alpha-value>)",
 
         popover: {
           DEFAULT: "hsl(var(--popover) / <alpha-value>)",
@@ -61,7 +58,7 @@ export default resolveConfig({
         theme: {
           // https://uicolors.app/create
           accent: {
-            DEFAULT: "#ff5c00",
+            DEFAULT: "hsl(var(--fo-a) / <alpha-value>)",
             50: "#fff7ec",
             100: "#ffeed3",
             200: "#ffd9a5",
@@ -127,7 +124,7 @@ export default resolveConfig({
     require("tailwindcss-animate"),
     require("@tailwindcss/container-queries"),
     require("@tailwindcss/typography"),
-    require("./src/renderer/src/styles/tailwind-extend.css"),
+    require("./apps/renderer/src/styles/tailwind-extend.css"),
     plugin(({ addVariant }) => {
       addVariant("f-motion-reduce", '[data-motion-reduce="true"] &')
       addVariant("group-motion-reduce", ':merge(.group)[data-motion-reduce="true"] &')
