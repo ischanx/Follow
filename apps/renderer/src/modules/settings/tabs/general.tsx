@@ -4,6 +4,7 @@ import { useCallback, useEffect } from "react"
 import { useTranslation } from "react-i18next"
 
 import { currentSupportedLanguages } from "~/@types/constants"
+import { defaultResources } from "~/@types/default-resource"
 import { langLoadingLockMapAtom } from "~/atoms/lang"
 import {
   setGeneralSetting,
@@ -191,7 +192,7 @@ export const VoiceSelector = () => {
         <SelectTrigger size="sm" className="w-48">
           <SelectValue />
         </SelectTrigger>
-        <SelectContent className="h-64">
+        <SelectContent position="item-aligned">
           {data?.map((item) => (
             <SelectItem key={item.ShortName} value={item.ShortName}>
               {item.FriendlyName}
@@ -236,10 +237,26 @@ export const LanguageSelector = () => {
           {currentSupportedLanguages.map((lang) => {
             const percent = I18N_COMPLETENESS_MAP[lang]
 
+            const languageName =
+              langT(`langs.${lang}` as any) === `langs.${lang}`
+                ? defaultResources[lang].lang.name
+                : langT(`langs.${lang}` as any)
+
+            const originalLanguageName = defaultResources[lang].lang.name
             return (
-              <SelectItem key={lang} value={lang}>
-                {langT(`langs.${lang}` as any)}{" "}
-                {typeof percent === "number" ? (percent >= 100 ? null : `(${percent}%)`) : null}
+              <SelectItem className="group" key={lang} value={lang}>
+                <span className={cn(originalLanguageName !== languageName && "group-hover:hidden")}>
+                  {languageName}
+                  {typeof percent === "number" ? (percent >= 100 ? null : ` (${percent}%)`) : null}
+                </span>
+                {originalLanguageName !== languageName && (
+                  <span
+                    className="hidden duration-500 animate-in fade-in-0 group-hover:block"
+                    key={"org"}
+                  >
+                    {originalLanguageName}
+                  </span>
+                )}
               </SelectItem>
             )
           })}
@@ -258,7 +275,7 @@ const NettingSetting = () => {
     <SettingItemGroup>
       <SettingInput
         type="text"
-        label={t("general.proxy")}
+        label={t("general.proxy.label")}
         labelClassName="w-[150px]"
         value={proxyConfig}
         onChange={(event) => setProxyConfig(event.target.value.trim())}

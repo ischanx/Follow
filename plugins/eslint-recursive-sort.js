@@ -27,8 +27,8 @@ export default {
       create(context) {
         return {
           Program(node) {
-            if (context.getFilename().endsWith(".json")) {
-              const sourceCode = context.getSourceCode()
+            if (context.filename.endsWith(".json")) {
+              const { sourceCode } = context
               const text = sourceCode.getText()
 
               try {
@@ -36,7 +36,7 @@ export default {
                 const sortedJson = sortObjectKeys(json)
                 const sortedText = JSON.stringify(sortedJson, null, 2)
 
-                if (text !== sortedText) {
+                if (text.trim() !== sortedText.trim()) {
                   context.report({
                     node,
                     message: "JSON keys are not sorted recursively",

@@ -99,6 +99,7 @@ export const viteRenderBaseConfig = {
       "@pkg": resolve("package.json"),
       "@locales": resolve("locales"),
       "@follow/electron-main": resolve("apps/main/src"),
+      "@constants": resolve("constants"),
     },
   },
   base: "/",
@@ -124,7 +125,7 @@ export const viteRenderBaseConfig = {
         electron: false,
       },
       sourcemaps: {
-        filesToDeleteAfterUpload: ["out/web/assets/*.js.map"],
+        filesToDeleteAfterUpload: ["out/web/assets/*.js.map", "dist/renderer/assets/*.js.map"],
       },
     }),
 

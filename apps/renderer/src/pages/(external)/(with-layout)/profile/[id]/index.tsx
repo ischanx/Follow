@@ -12,19 +12,19 @@ import { usePresentFeedFormModal } from "~/hooks/biz/useFeedFormModal"
 import { useAuthQuery, useI18n, useTitle } from "~/hooks/common"
 import { apiClient } from "~/lib/api-fetch"
 import { defineQuery } from "~/lib/defineQuery"
-import { cn } from "~/lib/utils"
+import { cn, isBizId } from "~/lib/utils"
 import { useUserSubscriptionsQuery } from "~/modules/profile/hooks"
 
 export function Component() {
   const t = useI18n()
   const { id } = useParams()
 
-  const isHandle = id?.startsWith("@")
+  const isHandle = id ? id.startsWith("@") || !isBizId(id) : false
   const user = useAuthQuery(
     defineQuery(["profiles", id], async () => {
       const res = await apiClient.profiles.$get({
         query: {
-          handle: isHandle ? id?.slice(1) : undefined,
+          handle: isHandle ? (id?.startsWith("@") ? id.slice(1) : id) : undefined,
           id: isHandle ? undefined : id,
         },
       })
@@ -60,7 +60,10 @@ export function Component() {
             </div>
             <div className="mb-8 text-sm text-zinc-500">{user.data?.handle}</div>
           </div>
-          <div className="mb-12 w-[70ch] max-w-full grow space-y-10">
+          <div
+            className="mb-12 w-[70ch] max-w-full grow space-y-10"
+            data-testid="profile-subscriptions"
+          >
             {subscriptions.isLoading ? (
               <LoadingCircle size="large" className="center fixed inset-0" />
             ) : (
@@ -106,7 +109,9 @@ export function Component() {
                                 onClick={(e) => {
                                   e.stopPropagation()
 
-                                  presentFeedFormModal(subscription.feedId)
+                                  presentFeedFormModal({
+                                    feedId: subscription.feedId,
+                                  })
                                 }}
                               >
                                 {isMe ? (
