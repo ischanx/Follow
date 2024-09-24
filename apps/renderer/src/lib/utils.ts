@@ -105,6 +105,10 @@ export const isSafari = memoize(() => {
   return ua.includes("Safari") && !ua.includes("Chrome")
 })
 
+export const isWindowsElectron = memoize(() => {
+  return window.electron && getOS() === "Windows"
+})()
+
 // eslint-disable-next-line no-control-regex
 export const isASCII = (str) => /^[\u0000-\u007F]*$/.test(str)
 

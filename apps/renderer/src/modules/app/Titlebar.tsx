@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 import { useUISettingKey } from "~/atoms/settings/ui"
 import { ElECTRON_CUSTOM_TITLEBAR_HEIGHT } from "~/constants"
 import { tipcClient } from "~/lib/client"
+import { cn, isWindowsElectron } from "~/lib/utils"
 
 export const Titlebar = () => {
   const { data: isMaximized, refetch } = useQuery({
@@ -47,7 +48,10 @@ export const Titlebar = () => {
 
       <button
         type="button"
-        className="no-drag-region pointer-events-auto flex h-full w-[50px] items-center justify-center duration-200 hover:bg-red-500 hover:!text-white"
+        className={cn(
+          "no-drag-region pointer-events-auto flex h-full w-[50px] items-center justify-center duration-200 hover:bg-red-500 hover:!text-white",
+          isWindowsElectron ? "overflow-hidden rounded-tr-[var(--fo-window-radius)]" : "",
+        )}
         onClick={() => {
           tipcClient?.windowAction({ action: "close" })
         }}

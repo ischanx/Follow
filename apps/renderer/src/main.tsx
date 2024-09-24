@@ -6,7 +6,7 @@ import ReactDOM from "react-dom/client"
 import { RouterProvider } from "react-router-dom"
 
 import { setAppIsReady } from "./atoms/app"
-import { ElECTRON_CUSTOM_TITLEBAR_HEIGHT } from "./constants"
+import { ElECTRON_CUSTOM_TITLEBAR_HEIGHT, ELECTRON_WINDOWS_RADIUS } from "./constants"
 import { initializeApp } from "./initialize"
 import { getOS } from "./lib/utils"
 import { router } from "./router"
@@ -19,6 +19,8 @@ const $container = document.querySelector("#root") as HTMLElement
 
 if (window.electron && getOS() === "Windows") {
   document.body.style.cssText += `--fo-window-padding-top: ${ElECTRON_CUSTOM_TITLEBAR_HEIGHT}px;`
+  document.body.style.cssText += `--fo-window-radius: ${ELECTRON_WINDOWS_RADIUS}px;`
+  document.documentElement.classList.add("windows")
 }
 ReactDOM.createRoot($container).render(
   <React.StrictMode>

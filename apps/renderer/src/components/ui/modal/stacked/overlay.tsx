@@ -2,7 +2,7 @@ import type { ForwardedRef } from "react"
 import { forwardRef } from "react"
 
 import { m } from "~/components/common/Motion"
-import { cn } from "~/lib/utils"
+import { cn, isWindowsElectron } from "~/lib/utils"
 
 import { RootPortal } from "../../portal"
 
@@ -24,9 +24,10 @@ export const ModalOverlay = forwardRef(
         ref={ref}
         id="modal-overlay"
         className={cn(
-          "pointer-events-none fixed inset-0 z-[11] rounded-[var(--fo-window-radius)] bg-zinc-50/80 dark:bg-neutral-900/80",
+          "pointer-events-none fixed inset-0 z-[11] bg-zinc-50/80 dark:bg-neutral-900/80",
           blur && "backdrop-blur-sm",
           className,
+          isWindowsElectron ? "inset-1 rounded-[var(--fo-window-radius)]" : "",
         )}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

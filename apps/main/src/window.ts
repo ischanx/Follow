@@ -67,7 +67,9 @@ export function createWindow(
         // Electron material bug, comment this for now
         // backgroundMaterial: isWindows11 ? "mica" : undefined,
 
-        frame: true,
+        transparent: true,
+        frame: false,
+        backgroundColor: "#00000000",
       } as Electron.BrowserWindowConstructorOptions)
       break
     }

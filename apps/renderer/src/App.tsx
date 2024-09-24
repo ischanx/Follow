@@ -50,7 +50,7 @@ function App() {
         <div
           className={cn(
             "drag-region fixed inset-x-0 top-0 h-12 shrink-0",
-            windowsElectron && "pointer-events-none z-[9999]",
+            windowsElectron && "pointer-events-none left-0 right-1 top-1 z-[9999]",
           )}
           aria-hidden
         >

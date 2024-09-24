@@ -26,7 +26,7 @@ import { ErrorComponentType } from "~/components/errors/enum"
 import { isElectronBuild } from "~/constants"
 import { useSwitchHotKeyScope } from "~/hooks/common"
 import { nextFrame, stopPropagation } from "~/lib/dom"
-import { cn } from "~/lib/utils"
+import { cn, isWindowsElectron } from "~/lib/utils"
 
 import { Divider } from "../../divider"
 import { RootPortalProvider } from "../../portal/provider"
@@ -265,6 +265,7 @@ export const ModalInternal = memo(
                     modal ? "inset-0 overflow-auto" : "left-0 top-0",
                     currentIsClosing ? "!pointer-events-none" : "!pointer-events-auto",
                     modalContainerClassName,
+                    isWindowsElectron ? "inset-1 rounded-[var(--fo-window-radius)]" : "",
                   )}
                   onPointerUp={handleDetectSelectEnd}
                   onClick={handleClickOutsideToDismiss}
